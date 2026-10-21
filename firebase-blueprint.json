@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "biodata_record": {
+      "title": "Biodata Record",
+      "description": "Matrimonial biodata profile details, themes, and settings",
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "description": "Header details including candidate name, titles, and profile avatar image URL"
+        },
+        "occupation": {
+          "type": "object",
+          "description": "Current profession, government ministry, and duties"
+        },
+        "education": {
+          "type": "array",
+          "description": "Academic qualifications and degrees"
+        },
+        "personal": {
+          "type": "array",
+          "description": "Physical, health, and personal attributes"
+        },
+        "family": {
+          "type": "array",
+          "description": "Parents, siblings, and relatives information"
+        },
+        "hobbies": {
+          "type": "array",
+          "description": "Leisure activities, hobbies, and sports"
+        },
+        "partnerPreferences": {
+          "type": "array",
+          "description": "Criteria and preferences for prospective spouse"
+        },
+        "gallery": {
+          "type": "array",
+          "description": "Array of gallery photo URLs and captions"
+        },
+        "strengths": {
+          "type": "object",
+          "description": "Personal traits and strengths"
+        },
+        "contact": {
+          "type": "object",
+          "description": "Contact numbers, guardian details, and addresses"
+        },
+        "intro": {
+          "type": "object",
+          "description": "Personal life philosophy and self intro"
+        },
+        "partnerIntro": {
+          "type": "object",
+          "description": "Introductory note for partner expectations"
+        },
+        "customSections": {
+          "type": "array",
+          "description": "Customizable content sections"
+        },
+        "sectionVisibility": {
+          "type": "object",
+          "description": "Visibility toggles for biodata sections"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of the last edit"
+        }
+      }
+    },
+    "profile_photo": {
+      "title": "Profile Photo",
+      "description": "Uploaded profile photo metadata and storage location",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Public download URL from Firebase Storage"
+        },
+        "storagePath": {
+          "type": "string",
+          "description": "Storage bucket path"
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "Timestamp of file upload"
+        },
+        "uploader": {
+          "type": "string",
+          "description": "Uploader email address"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/biodata/{biodataId}": {
+      "schema": "biodata_record",
+      "description": "Matrimonial biodata profiles"
+    },
+    "/biodata/{biodataId}/photos/{photoId}": {
+      "schema": "profile_photo",
+      "description": "Uploaded photo assets for biodata"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Nasir's Biodata",
+  "description": "Dynamic marriage biodata management system and public showcase for Md. Nasir Uddin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

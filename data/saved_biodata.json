@@ -1,0 +1,408 @@
+{
+  "header": {
+    "bismillah": "بِسْمِ اللهِ الرَّحْمٰনِ الرَّحِيْمِ",
+    "bismillahBn": "বিসমিল্লাহির রাহমানির রাহিম",
+    "label": "✦ Marriage Biodata · 2026 ✦",
+    "labelBn": "✦ বিয়ের জীবনবৃত্তান্ত · ২০২৬ ✦",
+    "name": "Md. Nasir Uddin",
+    "nameBn": "মোঃ নাসির উদ্দিন",
+    "title": "Assistant Authorized Officer",
+    "titleBn": "সহকারী অথরাইজড অফিসার",
+    "subTitle": "RAJUK, Bangladesh · Civil Engineer · BUET Graduate",
+    "subTitleBn": "রাজউক, বাংলাদেশ · সিভিল ইঞ্জিনিয়ার · বুয়েট গ্র্যাজুয়েট",
+    "photoUrl": "https://nasirinboxbd.github.io/nasir/preview.png",
+    "badges": [
+      "☪ Sunni Muslim",
+      "🇧🇩 Bangladesh",
+      "📍 Dhaka",
+      "🎓 BUET",
+      "🏛 Govt. Officer"
+    ],
+    "badgesBn": [
+      "☪ সুন্নি মুসলিম",
+      "🇧🇩 বাংলাদেশ",
+      "📍 ঢাকা",
+      "🎓 বুয়েট",
+      "🏛 সরকারি কর্মকর্তা"
+    ]
+  },
+  "personal": [
+    {
+      "id": "p1",
+      "label": "Full Name",
+      "labelBn": "পূর্ণ নাম",
+      "value": "Md. Nasir Uddin",
+      "valueBn": "মোঃ নাসির উদ্দিন",
+      "icon": "👤"
+    },
+    {
+      "id": "p2",
+      "label": "Date of Birth",
+      "labelBn": "জন্ম তারিখ",
+      "value": "17 October 1997",
+      "valueBn": "১৭ অক্টোবর ১৯৯৭",
+      "icon": "📅"
+    },
+    {
+      "id": "p3",
+      "label": "Age",
+      "labelBn": "বয়স",
+      "value": "28 years",
+      "valueBn": "২৮ বছর",
+      "highlight": true,
+      "icon": "⏳"
+    },
+    {
+      "id": "p4",
+      "label": "Religion",
+      "labelBn": "ধর্ম",
+      "value": "☪ Islam — Sunni",
+      "valueBn": "☪ ইসলাম — সুন্নি",
+      "icon": "☪️"
+    },
+    {
+      "id": "p5",
+      "label": "Blood Group",
+      "labelBn": "রক্তের গ্রুপ",
+      "value": "🩸 B+",
+      "valueBn": "🩸 বি পজিটিভ (B+)",
+      "icon": "🩸"
+    },
+    {
+      "id": "p6",
+      "label": "Height · Weight",
+      "labelBn": "উচ্চতা · ওজন",
+      "value": "5′6″ · 65 kg",
+      "valueBn": "৫ ফুট ৬ ইঞ্চি · ৬৫ কেজি",
+      "icon": "📏"
+    },
+    {
+      "id": "p7",
+      "label": "Marital Status",
+      "labelBn": "বৈবাহিক অবস্থা",
+      "value": "Unmarried",
+      "valueBn": "অবিবাহিত",
+      "highlight": true,
+      "icon": "💍"
+    },
+    {
+      "id": "p8",
+      "label": "Languages",
+      "labelBn": "ভাষা দক্ষতা",
+      "value": "Bengali, English",
+      "valueBn": "বাংলা, ইংরেজি",
+      "icon": "🗣️"
+    },
+    {
+      "id": "p9",
+      "label": "Present Address",
+      "labelBn": "বর্তমান ঠিকানা",
+      "value": "Mirpur-13, Dhaka",
+      "valueBn": "মিরপুর-১৩, ঢাকা",
+      "icon": "📍"
+    },
+    {
+      "id": "p10",
+      "label": "Permanent Address",
+      "labelBn": "স্থায়ী ঠিকানা",
+      "value": "Namila, Kapasia, Gazipur",
+      "valueBn": "নামিলা, কাপাসিয়া, গাজীপুর",
+      "icon": "🏡"
+    }
+  ],
+  "occupation": {
+    "grade": "9th Grade · Government Service · Since 2024",
+    "gradeBn": "৯ম গ্রেড · সরকারি চাকরি · ২০২৪ থেকে",
+    "title": "Assistant Authorized Officer",
+    "titleBn": "সহকারী অথরাইজড অফিসার",
+    "organization": "Capital Development Authority (RAJUK), Bangladesh",
+    "organizationBn": "রাজধানী উন্নয়ন কর্তৃপক্ষ (রাজউক), বাংলাদেশ",
+    "duties": [
+      {
+        "id": "d1",
+        "text": "Scrutinizing building plans",
+        "textBn": "ইমারত ও ভবনের নকশা যাচাই ও পর্যালোচনা"
+      },
+      {
+        "id": "d2",
+        "text": "Granting construction permits & occupancy certificates",
+        "textBn": "নির্মাণ অনুমোদন ও অকুপেন্সি সনদ প্রদান প্রক্রিয়া"
+      },
+      {
+        "id": "d3",
+        "text": "Resolving public complaints",
+        "textBn": "নাগরিক অভিযোগ ও জনসেবামূলক সমস্যার সমাধান"
+      }
+    ]
+  },
+  "education": [
+    {
+      "id": "e1",
+      "institution": "Bangladesh University of Engineering & Technology (BUET)",
+      "institutionBn": "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (বুয়েট)",
+      "degree": "BSc in Civil Engineering — Graduated 2022",
+      "degreeBn": "বিএসসি ইন সিভিল ইঞ্জিনিয়ারিং — ২০২২ সালে সম্পন্ন",
+      "year": "2022",
+      "highlight": true
+    },
+    {
+      "id": "e2",
+      "institution": "Notre Dame College, Dhaka",
+      "institutionBn": "নটর ডেম কলেজ, ঢাকা",
+      "degree": "Higher Secondary Education (HSC)",
+      "degreeBn": "উচ্চ মাধ্যমিক সার্টিফিকেট (এইচএসসি)"
+    },
+    {
+      "id": "e3",
+      "institution": "Kapalaswar High School, Kapasia, Gazipur",
+      "institutionBn": "কপালেশ্বর উচ্চ বিদ্যালয়, কাপাসিয়া, গাজীপুর",
+      "degree": "Secondary Education (SSC)",
+      "degreeBn": "মাধ্যমিক সার্টিফিকেট (এসএসসি)"
+    }
+  ],
+  "intro": {
+    "bodyEn": "I am Md. Nasir Uddin, 28 years old, from Gazipur district, currently residing in Dhaka. I completed my graduation in Civil Engineering from BUET in 2022. Since 2024, I have been serving as an Assistant Authorized Officer at RAJUK — scrutinizing building plans, assisting in granting construction permits and occupancy certificates, and resolving public complaints. I belong to a small and supportive family whose values have shaped my character. My hobby is computer programming, which enhances my analytical thinking and problem-solving ability. I aspire to serve the nation with honesty, dedication, and integrity.",
+    "bodyBn": "আসসালামু আলাইকুম। আমার নাম মোঃ নাসির উদ্দিন, বয়স ২৮ বছর। আমি বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (বুয়েট) থেকে সিভিল ইঞ্জিনিয়ারিং-এ স্নাতক সম্পন্ন করেছি ২০২২ সালে। ২০২৪ সাল থেকে রাজউকে সহকারী অথরাইজড অফিসার হিসেবে দায়িত্ব পালন করছি। সততা ও নিষ্ঠার সাথে দেশ ও জাতির সেবা করাই আমার মূল লক্ষ্য।"
+  },
+  "strengths": {
+    "strengths": [
+      "Patience to handle heavy or sudden workloads",
+      "Adapts to cutting-edge technology",
+      "Strong self-motivation and drive",
+      "Consistency in work performance",
+      "Well-organised and disciplined"
+    ],
+    "strengthsBn": [
+      "চাপযুক্ত কাজের ক্ষেত্রে বিশেষ ধৈর্য ও সহনশীলতা",
+      "নতুন প্রযুক্তি দ্রুত আয়ত্ত ও প্রয়োগের দক্ষতা",
+      "দৃঢ় আত্মবিশ্বাস ও কাজ করার স্পৃহা",
+      "কাজে ধারাবাহিকতা ও নিষ্ঠা বজায় রাখা",
+      "সুসংগঠিত ও সুশৃঙ্খল জীবনযাপন"
+    ],
+    "growthAreas": [
+      "Overthinking — practicing timely decisions",
+      "Emotional by nature — learning calm responses",
+      "Asks many questions — filtering essentials",
+      "Overanalyses — keeping things simple"
+    ],
+    "growthAreasBn": [
+      "অতিরিক্ত চিন্তা করা — সময়মতো দ্রুত সিদ্ধান্ত গ্রহণের চর্চা চলছে",
+      "স্বভাবগতভাবে আবেগপ্রবণ — শান্ত প্রতিক্রিয়া অনুশীলনে সচেষ্ট",
+      "বেশি প্রশ্ন করা — সবচেয়ে জরুরি বিষয়গুলো বাছাই করার অভ্যাস করছি",
+      "জটিল বিশ্লেষণ কমানো — বিষয়গুলোকে সহজভাবে নেওয়ার চেষ্টা"
+    ]
+  },
+  "family": [
+    {
+      "id": "f1",
+      "role": "Father",
+      "roleBn": "পিতা",
+      "name": "Md. Momtaz Uddin 🕊️",
+      "nameBn": "মরহুম মোঃ মমতাজ উদ্দিন 🕊️",
+      "note": "Late (Rahimahullah)",
+      "noteBn": "মরহুম (রাহিমাহুল্লাহ)",
+      "highlight": true
+    },
+    {
+      "id": "f2",
+      "role": "Mother",
+      "roleBn": "মাতা",
+      "name": "Anowara Begum",
+      "nameBn": "আনোয়ারা বেগম",
+      "note": "Housemaker",
+      "noteBn": "গৃহিণী",
+      "highlight": true
+    },
+    {
+      "id": "f3",
+      "role": "Elder Brother",
+      "roleBn": "বড় ভাই",
+      "name": "Md. Aminul Islam",
+      "nameBn": "মোঃ আমিনুল ইসলাম",
+      "note": "Imam & Farmer",
+      "noteBn": "ইমাম ও কৃষিবিদ"
+    },
+    {
+      "id": "f4",
+      "role": "Brother",
+      "roleBn": "ভাই",
+      "name": "Md. Amdadul Haque",
+      "nameBn": "মোঃ এমদাদুল হক",
+      "note": "Farmer & Grocery",
+      "noteBn": "কৃষি ও ব্যবসা"
+    },
+    {
+      "id": "f5",
+      "role": "Brother ✈️",
+      "roleBn": "ভাই ✈️",
+      "name": "Md. Asadullah",
+      "nameBn": "মোঃ আসাদুল্লাহ",
+      "note": "Living abroad — Malaysia",
+      "noteBn": "প্রবাসে কর্মরত — মালয়েশিয়া",
+      "statusBadge": "Malaysia 🇲🇾"
+    },
+    {
+      "id": "f6",
+      "role": "Brother",
+      "roleBn": "ভাই",
+      "name": "Md. Tanzil",
+      "nameBn": "মোঃ তানজিল",
+      "note": "Manages Grocery Shop",
+      "noteBn": "ব্যবসায়ী"
+    },
+    {
+      "id": "f7",
+      "role": "Sister",
+      "roleBn": "বোন",
+      "name": "Momotaz Parvin",
+      "nameBn": "মমতাজ পারভীন",
+      "note": "Housemaker",
+      "noteBn": "গৃহিণী"
+    }
+  ],
+  "hobbies": [
+    {
+      "id": "h1",
+      "label": "Computer Programming",
+      "labelBn": "কম্পিউটার প্রোগ্রামিং",
+      "icon": "💻",
+      "colorClass": "hobby1"
+    },
+    {
+      "id": "h2",
+      "label": "Reading Books",
+      "labelBn": "বই পড়া ও অধ্যয়ন",
+      "icon": "📚",
+      "colorClass": "hobby2"
+    },
+    {
+      "id": "h3",
+      "label": "Mentoring",
+      "labelBn": "পরামর্শ ও দিকনির্দেশনা প্রদান",
+      "icon": "🧑‍🏫",
+      "colorClass": "hobby3"
+    }
+  ],
+  "partnerPreferences": [
+    {
+      "id": "pr1",
+      "icon": "🎂",
+      "label": "Age Range",
+      "labelBn": "বয়স সীমা",
+      "value": "21 – 26 years",
+      "valueBn": "২১ – ২৬ বছর"
+    },
+    {
+      "id": "pr2",
+      "icon": "🎓",
+      "label": "Education",
+      "labelBn": "শিক্ষাগত যোগ্যতা",
+      "value": "At least BSc",
+      "valueBn": "কমপক্ষে বিএসসি বা সমমান"
+    },
+    {
+      "id": "pr3",
+      "icon": "📍",
+      "label": "Location",
+      "labelBn": "জেলা/এলাকা",
+      "value": "Any District",
+      "valueBn": "যেকোনো জেলা"
+    },
+    {
+      "id": "pr4",
+      "icon": "☪️",
+      "label": "Religion",
+      "labelBn": "ধর্মীয় মূল্যবোধ",
+      "value": "Islam (Practicing)",
+      "valueBn": "ইসলাম (নিয়মিত আমলকারী)"
+    },
+    {
+      "id": "pr5",
+      "icon": "💔",
+      "label": "Marital Status",
+      "labelBn": "বৈবাহিক অবস্থা",
+      "value": "Never Married",
+      "valueBn": "কখনো বিবাহ বন্ধনে আবদ্ধ হননি"
+    },
+    {
+      "id": "pr6",
+      "icon": "🌿",
+      "label": "Character",
+      "labelBn": "চরিত্র ও স্বভাব",
+      "value": "Has Clean Past",
+      "valueBn": "সুন্দর চরিত্র ও শালীন ব্যক্তিত্ব"
+    }
+  ],
+  "partnerIntro": {
+    "en": "Seeking a pious, practicing Muslimah as a life partner. I would like to extend this beautiful relationship to Jannah.",
+    "bn": "দ্বীনদার, পর্দাশীল ও নেককার জীবনসঙ্গিনী প্রত্যাশা করছি। এই বরকতময় বন্ধন যেন আখিরাতে জান্নাত পর্যন্ত বিস্তৃত হয়।"
+  },
+  "contact": {
+    "name": "Md. Nasir Uddin",
+    "nameBn": "মোঃ নাসির উদ্দিন",
+    "role": "Assistant Authorized Officer · RAJUK · Civil Engineer – BUET",
+    "roleBn": "সহকারী অথরাইজড অফিসার · রাজউক · সিভিল ইঞ্জিনিয়ার — বুয়েট",
+    "phone": "01709606135",
+    "email": "nasir.developer.bd@gmail.com",
+    "showPhone": true,
+    "showEmail": true,
+    "location": "Mirpur-13, Dhaka",
+    "locationBn": "মিরপুর-১৩, ঢাকা",
+    "badges": [
+      "☪ Sunni Muslim",
+      "🇧🇩 Bangladesh",
+      "📍 Mirpur, Dhaka",
+      "🩸 B+"
+    ]
+  },
+  "footer": {
+    "text": "✦ Biodata — Md. Nasir Uddin — 2026 ✦",
+    "textBn": "✦ জীবনবৃত্তান্ত — মোঃ নাসির উদ্দিন — ২০২৬ ✦"
+  },
+  "gallery": [
+    {
+      "id": "g1",
+      "url": "https://nasirinboxbd.github.io/nasir/preview.png",
+      "caption": "Official Portrait — Md. Nasir Uddin",
+      "captionBn": "অফিসিয়াল প্রতিকৃতি — মোঃ নাসির উদ্দিন",
+      "isFeatured": true,
+      "visible": true,
+      "dateAdded": "2026"
+    }
+  ],
+  "sectionVisibility": {
+    "header": true,
+    "personal": true,
+    "occupation": true,
+    "education": true,
+    "intro": true,
+    "strengths": true,
+    "family": true,
+    "hobbies": true,
+    "partner": true,
+    "contact": true,
+    "footer": true,
+    "gallery": true
+  },
+  "sectionOrder": [
+    "personal",
+    "occupation",
+    "education",
+    "intro",
+    "strengths",
+    "family",
+    "hobbies",
+    "gallery",
+    "partner",
+    "contact"
+  ],
+  "customSections": [],
+  "activityLogs": [
+    {
+      "id": "log_1",
+      "timestamp": "2026-10-15 22:56",
+      "action": "Initial Publication",
+      "details": "Pristine biodata imported and synchronized with live site."
+    }
+  ]
+}

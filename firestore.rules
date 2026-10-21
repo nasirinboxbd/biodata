@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'nasir.developer.bd@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Catch-all default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Matrimonial biodata profiles: public can view, admin/authorized can update
+    match /biodata/{biodataId} {
+      allow get: if isValidId(biodataId);
+      allow list: if true;
+      allow create, update: if isValidId(biodataId) && (isAdmin() || isSignedIn());
+      allow delete: if isValidId(biodataId) && isAdmin();
+
+      match /photos/{photoId} {
+        allow get, list: if isValidId(biodataId) && isValidId(photoId);
+        allow create, update: if isValidId(biodataId) && isValidId(photoId) && (isAdmin() || isSignedIn());
+        allow delete: if isValidId(biodataId) && isValidId(photoId) && isAdmin();
+      }
+    }
+
+    // Admins registry
+    match /admins/{adminId} {
+      allow get: if isValidId(adminId) && isSignedIn();
+      allow list: if false;
+      allow write: if false;
+    }
+  }
+}
