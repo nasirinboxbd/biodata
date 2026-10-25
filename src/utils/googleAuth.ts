@@ -44,14 +44,25 @@ export const googleSignIn = async (): Promise<{ user: User; accessToken: string 
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     if (!credential?.accessToken) {
-      throw new Error('Failed to obtain Google access token with Gmail scope');
+      console.warn('[Google Auth] Sign-in completed without an access token');
+      return null;
     }
 
     cachedAccessToken = credential.accessToken;
     return { user: result.user, accessToken: cachedAccessToken };
   } catch (error: any) {
-    console.error('Sign in error:', error);
-    throw error;
+    const errorCode = error?.code || '';
+    if (
+      errorCode === 'auth/popup-closed-by-user' ||
+      errorCode === 'auth/cancelled-popup-request' ||
+      errorCode === 'auth/popup-blocked'
+    ) {
+      console.warn(`[Google Auth] Sign-in popup was dismissed or blocked by browser (${errorCode}).`);
+      return null;
+    }
+
+    console.warn('[Google Auth] Sign-in notice:', error?.message || error);
+    return null;
   } finally {
     isSigningIn = false;
   }

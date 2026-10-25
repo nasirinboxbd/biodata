@@ -29,7 +29,18 @@ export default function App() {
   const [biodata, setBiodata] = useState<BiodataContent>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_BIODATA);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (
+          parsed.header?.bismillah &&
+          (parsed.header.bismillah.includes('ন') ||
+            parsed.header.bismillah.includes('শ') ||
+            !parsed.header.bismillah.includes('الرَّحْمَٰنِ'))
+        ) {
+          parsed.header.bismillah = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+        }
+        return parsed;
+      }
     } catch (e) {
       console.warn('Could not read cached biodata, using defaults');
     }
@@ -170,6 +181,14 @@ export default function App() {
     loadBiodataFromFirestore()
       .then((firestoreData) => {
         if (firestoreData && firestoreData.header && firestoreData.header.name) {
+          if (
+            firestoreData.header.bismillah &&
+            (firestoreData.header.bismillah.includes('ন') ||
+              firestoreData.header.bismillah.includes('শ') ||
+              !firestoreData.header.bismillah.includes('الرَّحْمَٰنِ'))
+          ) {
+            firestoreData.header.bismillah = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+          }
           setBiodata(firestoreData);
           try {
             localStorage.setItem(STORAGE_KEY_BIODATA, JSON.stringify(firestoreData));
@@ -182,12 +201,28 @@ export default function App() {
           .then((res) => (res.ok ? res.json() : null))
           .then((data) => {
             if (data?.biodata && data.biodata.header) {
+              if (
+                data.biodata.header.bismillah &&
+                (data.biodata.header.bismillah.includes('ন') ||
+                  data.biodata.header.bismillah.includes('শ') ||
+                  !data.biodata.header.bismillah.includes('الرَّحْمَٰنِ'))
+              ) {
+                data.biodata.header.bismillah = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+              }
               const saved = localStorage.getItem(STORAGE_KEY_BIODATA);
               if (!saved) {
                 setBiodata(data.biodata);
               } else {
                 try {
                   const parsed = JSON.parse(saved);
+                  if (
+                    parsed.header?.bismillah &&
+                    (parsed.header.bismillah.includes('ন') ||
+                      parsed.header.bismillah.includes('শ') ||
+                      !parsed.header.bismillah.includes('الرَّحْمَٰنِ'))
+                  ) {
+                    parsed.header.bismillah = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+                  }
                   fetch('/api/biodata', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -306,7 +341,13 @@ export default function App() {
         {/* ══ HEADER ══ */}
         {vis.header !== false && (
           <header className="header">
-            <div className="bismillah">{bismillah}</div>
+            <div
+              className="bismillah"
+              dir={lang === 'bn' ? 'ltr' : 'rtl'}
+              lang={lang === 'bn' ? 'bn' : 'ar'}
+            >
+              {bismillah}
+            </div>
             <p className="header-label">{headerLabel}</p>
 
             {/* SOLAR SYSTEM AVATAR WITH ROTATING SHELLS */}

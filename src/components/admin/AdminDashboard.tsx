@@ -436,7 +436,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Gallery Image Upload Handler (Converts file to base64 Data URL)
-  const handleImageFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -445,13 +445,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const dataUrl = event.target?.result as string;
-      setNewGalleryUrl(dataUrl);
-      showToast('Image loaded. Enter caption and click Add Image.');
-    };
-    reader.readAsDataURL(file);
+    try {
+      setIsUploadingGallery(true);
+      showToast('Processing and uploading photo...');
+      const result = await uploadProfileImageToFirebase(file);
+      setNewGalleryUrl(result.url);
+      showToast('Photo ready! Enter caption and click Add.');
+    } catch (err: any) {
+      console.warn('Image upload notice:', err);
+      showToast('Could not process photo. Please choose another image.');
+    } finally {
+      setIsUploadingGallery(false);
+      e.target.value = '';
+    }
   };
 
   const [isUploadingGallery, setIsUploadingGallery] = useState(false);
@@ -554,10 +560,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       setProfilePhotoUrlInput(result.url);
       setProfileUploadSuccess(
         result.storageType === 'firebase'
-          ? `Saved to Firebase Storage (${result.filename})`
-          : `Saved locally (${result.filename})`
+          ? `Persisted to Firebase Storage (${result.filename})`
+          : `Persisted to Cloud Storage (${result.filename})`
       );
       onUpdateBiodata(updatedBiodata);
+      onPublish(updatedBiodata);
 
       // Persist to server
       fetch('/api/biodata', {
@@ -714,6 +721,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               Unsaved Changes
             </span>
           )}
+
+          <a
+            href="/api/download-dist"
+            download="dist.zip"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 transition border border-amber-500/30 cursor-pointer no-underline"
+            title="Download Zipped Production dist Folder"
+          >
+            <Download size={14} />
+            dist.zip
+          </a>
 
           <button
             onClick={handleSaveDraft}
@@ -1112,6 +1129,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </div>
                     <ArrowUpRight size={14} className="text-amber-400 shrink-0" />
                   </button>
+
+                  <a
+                    href="/api/download-dist"
+                    download="dist.zip"
+                    className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/30 text-left transition cursor-pointer flex items-center justify-between no-underline group"
+                  >
+                    <div>
+                      <div className="text-xs font-semibold text-amber-300 flex items-center gap-2">
+                        <span>📦 Download Production Bundle (dist.zip)</span>
+                      </div>
+                      <div className="text-[11px] text-white/60 mt-1">Directly download zipped dist build folder</div>
+                    </div>
+                    <Download size={15} className="text-amber-400 shrink-0 group-hover:translate-y-0.5 transition" />
+                  </a>
                 </div>
               </div>
             </div>

@@ -21,7 +21,7 @@ export const DEFAULT_THEME: ThemeSettings = {
 
 export const DEFAULT_BIODATA: BiodataContent = {
   header: {
-    bismillah: 'بِسْمِ اللهِ الرَّحْمٰনِ الرَّحِيْمِ',
+    bismillah: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
     bismillahBn: 'বিসমিল্লাহির রাহমানির রাহিম',
     label: '✦ Marriage Biodata · 2026 ✦',
     labelBn: '✦ বিয়ের জীবনবৃত্তান্ত · ২০২৬ ✦',

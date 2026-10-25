@@ -172,8 +172,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           const authResult = await googleSignIn();
           accessToken = authResult?.accessToken || null;
         } catch (popupErr: any) {
-          console.warn('Google sign-in popup closed or skipped:', popupErr);
+          console.warn('Google sign-in popup skipped:', popupErr?.message || popupErr);
         }
+      }
+
+      if (!accessToken) {
+        setOtpStatus({
+          type: 'error',
+          message:
+            'Google Sign-in was dismissed. You can click "Authorize with Google & Send OTP" below, or enter your Master Formula Key (F=kq1q2/d^2) to reset your password immediately.',
+        });
+        setViewMode('verify_otp');
+        setIsSendingOtp(false);
+        return;
       }
 
       const response = await fetch('/api/auth/send-otp', {
@@ -181,14 +192,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: authorizedEmail,
-          accessToken: accessToken || undefined,
+          accessToken: accessToken,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || 'Failed to dispatch OTP via Nodemailer.');
+        setOtpStatus({
+          type: 'error',
+          message: data.error || 'Failed to dispatch OTP. You can use your Master Formula Key (F=kq1q2/d^2) below.',
+        });
+        setViewMode('verify_otp');
+        setIsSendingOtp(false);
+        return;
       }
 
       const expires = data.expiresAt || (Date.now() + 15 * 60 * 1000);
@@ -205,10 +222,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       });
       setViewMode('verify_otp');
     } catch (err: any) {
-      console.error('Nodemailer OTP dispatch error:', err);
+      console.warn('Nodemailer OTP dispatch notice:', err?.message || err);
       setOtpStatus({
         type: 'error',
-        message: err.message || 'Unable to connect to Nodemailer service. Please try again.',
+        message: err.message || 'Unable to connect to Nodemailer service. You can use your Master Formula Key (F=kq1q2/d^2) to reset immediately.',
       });
       setViewMode('verify_otp');
     } finally {
@@ -487,6 +504,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     {otpStatus.type === 'success' ? 'OTP Dispatched to Gmail' : 'Notice'}
                   </p>
                   <p>{otpStatus.message}</p>
+                  {otpStatus.type === 'error' && (
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={handleSendOtpViaNodemailer}
+                        className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium transition cursor-pointer"
+                      >
+                        Try Google Sign-In Again
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowMasterKeyInput(true)}
+                        className="px-2.5 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/30 text-[11px] font-medium transition cursor-pointer"
+                      >
+                        Use Master Formula Key
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

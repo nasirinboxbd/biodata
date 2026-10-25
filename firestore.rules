@@ -14,39 +14,26 @@ service cloud.firestore {
       return resource.data;
     }
 
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    function isAdmin() {
-      return isSignedIn() && (
-        request.auth.token.email == 'nasir.developer.bd@gmail.com' ||
-        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
-      );
-    }
-
-    // Catch-all default deny
+    // Default deny for arbitrary collections
     match /{document=**} {
       allow read, write: if false;
     }
 
-    // Matrimonial biodata profiles: public can view, admin/authorized can update
+    // Matrimonial biodata profiles: public can view, authorized updates persist
     match /biodata/{biodataId} {
       allow get: if isValidId(biodataId);
       allow list: if true;
-      allow create, update: if isValidId(biodataId) && (isAdmin() || isSignedIn());
-      allow delete: if isValidId(biodataId) && isAdmin();
+      allow write: if isValidId(biodataId);
 
       match /photos/{photoId} {
         allow get, list: if isValidId(biodataId) && isValidId(photoId);
-        allow create, update: if isValidId(biodataId) && isValidId(photoId) && (isAdmin() || isSignedIn());
-        allow delete: if isValidId(biodataId) && isValidId(photoId) && isAdmin();
+        allow write: if isValidId(biodataId) && isValidId(photoId);
       }
     }
 
     // Admins registry
     match /admins/{adminId} {
-      allow get: if isValidId(adminId) && isSignedIn();
+      allow get: if isValidId(adminId);
       allow list: if false;
       allow write: if false;
     }

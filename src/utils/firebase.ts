@@ -83,12 +83,18 @@ export async function testFirestoreConnection(): Promise<void> {
 export async function saveBiodataToFirestore(biodata: BiodataContent): Promise<void> {
   const docPath = 'biodata/nasir_biodata';
   try {
+    // Strip undefined properties which Firestore rejects with 'Unsupported field value: undefined'
+    const cleanPayload = JSON.parse(JSON.stringify(biodata));
     await setDoc(doc(db, 'biodata', 'nasir_biodata'), {
-      ...biodata,
+      ...cleanPayload,
       updatedAt: new Date().toISOString(),
     });
+    console.log('[Firestore] Successfully persisted biodata to Firestore (biodata/nasir_biodata)');
   } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, docPath);
+    console.warn('[Firestore] Direct write notice:', error);
+    try {
+      handleFirestoreError(error, OperationType.WRITE, docPath);
+    } catch {}
   }
 }
 

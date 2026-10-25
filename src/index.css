@@ -173,10 +173,14 @@ body.has-custom-cursor:not(.admin-active) .pref-card {
 }
 
 .bismillah {
-  font-family: 'Scheherazade New', serif;
-  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-family: 'Scheherazade New', 'Amiri', 'Traditional Arabic', serif;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+  direction: rtl;
+  unicode-bidi: isolate;
   color: var(--gold);
   margin-bottom: 18px;
+  line-height: 1.5;
+  letter-spacing: 0;
   animation: glowPulse 3s ease-in-out infinite;
 }
 

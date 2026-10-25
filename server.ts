@@ -12,7 +12,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: '15mb' }));
+
+const UPLOADS_DIR = path.resolve(process.cwd(), 'public', 'uploads');
+try {
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  }
+} catch (e) {
+  console.warn('Could not create uploads directory:', e);
+}
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // Active OTP session state (never sent in HTTP response)
 interface OtpSession {
@@ -502,6 +512,69 @@ app.get('/favicon.ico', (_req, res) => {
   res.status(204).end();
 });
 
+// POST /api/upload-image — Persist uploaded profile and gallery images
+app.post('/api/upload-image', (req, res) => {
+  try {
+    const { dataUrl, filename } = req.body;
+    if (!dataUrl || typeof dataUrl !== 'string') {
+      res.status(400).json({ success: false, error: 'No image data provided' });
+      return;
+    }
+
+    const matches = dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      res.status(400).json({ success: false, error: 'Invalid data URL format' });
+      return;
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, 'base64');
+
+    const ext = mimeType.includes('png') ? 'png' : mimeType.includes('webp') ? 'webp' : 'jpg';
+    const cleanBaseName = (filename || 'avatar').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeFilename = `nasir_${Date.now()}_${cleanBaseName}.${ext}`;
+
+    const uploadsDir = path.resolve(process.cwd(), 'public', 'uploads');
+    const distUploadsDir = path.resolve(process.cwd(), 'dist', 'uploads');
+
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+    if (fs.existsSync(path.resolve(process.cwd(), 'dist')) && !fs.existsSync(distUploadsDir)) {
+      fs.mkdirSync(distUploadsDir, { recursive: true });
+    }
+
+    fs.writeFileSync(path.join(uploadsDir, safeFilename), buffer);
+    if (fs.existsSync(distUploadsDir)) {
+      fs.writeFileSync(path.join(distUploadsDir, safeFilename), buffer);
+    }
+
+    const publicUrl = `/uploads/${safeFilename}`;
+    console.log(`[UPLOAD] Image saved to ${publicUrl} (${buffer.length} bytes)`);
+
+    res.json({
+      success: true,
+      url: publicUrl,
+      filename: safeFilename,
+      size: buffer.length,
+    });
+  } catch (err: any) {
+    console.error('[UPLOAD] Error saving image:', err);
+    res.status(500).json({ success: false, error: err.message || 'Failed to save image' });
+  }
+});
+
+// GET /api/download-dist — Download the zipped production dist bundle
+app.get('/api/download-dist', (_req, res) => {
+  const distZipPath = path.resolve(process.cwd(), 'dist.zip');
+  if (fs.existsSync(distZipPath)) {
+    res.download(distZipPath, 'dist.zip');
+  } else {
+    res.status(404).send('dist.zip not found. Please build the application first.');
+  }
+});
+
 // GET /api/biodata — Read currently synchronized biodata
 app.get('/api/biodata', (_req, res) => {
   res.json({
@@ -686,10 +759,11 @@ app.post('/api/auth/send-otp', async (req, res) => {
         validityMinutes: 15,
       });
     } else {
-      res.status(401).json({
+      res.json({
         success: false,
+        requiresAuth: true,
         error:
-          'Could not dispatch email. Please click "Sign in with Google" to authorize Gmail access for your account, or use your master password.',
+          'Could not dispatch email automatically. Please click "Authorize with Google" to grant Gmail dispatch permissions, or reset your password instantly using your Master Formula Key (F=kq1q2/d^2).',
       });
     }
   } catch (err: any) {
