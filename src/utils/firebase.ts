@@ -19,7 +19,7 @@ export const db = getFirestore(app, (firebaseConfig as any).firestoreDatabaseId)
 
 // Initialize Auth & Storage
 export const auth = getAuth(app);
-export const storage = getStorage(app);
+export const storage = getStorage(app, (firebaseConfig as any).storageBucket);
 
 export enum OperationType {
   CREATE = 'create',

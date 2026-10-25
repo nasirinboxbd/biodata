@@ -17,6 +17,7 @@ import {
   History,
   Save,
   CheckCircle2,
+  AlertCircle,
   Eye,
   LogOut,
   X,
@@ -70,7 +71,10 @@ import {
 } from '../../types/biodata';
 import { DatePickerModal } from './DatePickerModal';
 import { EmojiPickerModal } from './EmojiPickerModal';
-import { uploadProfileImageToFirebase } from '../../utils/firebaseStorage';
+import {
+  uploadProfileImageToFirebase,
+  uploadImageToServerStorage,
+} from '../../utils/firebaseStorage';
 
 interface AdminDashboardProps {
   biodata: BiodataContent;
@@ -527,6 +531,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   );
   const [profileUploadSuccess, setProfileUploadSuccess] = useState<string | null>(null);
 
+  const [storageNotice, setStorageNotice] = useState<{
+    message: string;
+    actionUrl?: string;
+    pendingFile?: File;
+  } | null>(null);
+
   const handleProfileImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -539,9 +549,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setIsUploadingProfile(true);
     setProfileUploadProgress(0);
     setProfileUploadSuccess(null);
+    setStorageNotice(null);
 
     try {
-      showToast('Uploading profile image to Firebase Storage...');
+      showToast('Uploading image directly to Firebase Storage...');
       const result = await uploadProfileImageToFirebase(file, (progress) => {
         setProfileUploadProgress(progress);
       });
@@ -558,11 +569,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       setDraftBiodata(updatedBiodata);
       setProfilePhotoUrlInput(result.url);
-      setProfileUploadSuccess(
-        result.storageType === 'firebase'
-          ? `Persisted to Firebase Storage (${result.filename})`
-          : `Persisted to Cloud Storage (${result.filename})`
-      );
+      setProfileUploadSuccess(`Uploaded directly to Firebase Storage (${result.filename})`);
       onUpdateBiodata(updatedBiodata);
       onPublish(updatedBiodata);
 
@@ -575,16 +582,64 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       logActivity(
         'photo',
-        `Updated profile picture (${result.storageType === 'firebase' ? 'Firebase Storage' : 'Local'})`
+        `Uploaded profile picture directly to Firebase Storage (${result.filename})`
       );
-      showToast('Profile image successfully updated and saved in Firebase Storage!');
+      showToast('Profile image successfully uploaded to Firebase Storage!');
     } catch (err: any) {
-      console.error('Profile image upload failed:', err);
-      showToast(err.message || 'Failed to upload profile image.');
+      console.warn('Firebase Storage upload error:', err);
+      const isBucketNotice =
+        err?.code === 'storage/unknown' ||
+        err?.code === 'storage/bucket-not-found' ||
+        err?.message?.includes('unknown') ||
+        err?.message?.includes('404');
+
+      if (isBucketNotice) {
+        setStorageNotice({
+          message:
+            'Firebase Storage bucket (sinuous-gist-471110-i3.firebasestorage.app) is waiting for 1-click activation in your Firebase Console. Click below to open your console and click "Get Started" to activate direct bucket uploads.',
+          actionUrl:
+            'https://console.firebase.google.com/project/sinuous-gist-471110-i3/storage',
+          pendingFile: file,
+        });
+        showToast('Firebase Storage bucket needs 1-click activation in console.');
+      } else {
+        showToast(err.message || 'Firebase Storage direct upload failed.');
+      }
     } finally {
       setIsUploadingProfile(false);
       setProfileUploadProgress(0);
       e.target.value = '';
+    }
+  };
+
+  const handleFallbackServerUpload = async () => {
+    if (!storageNotice?.pendingFile) return;
+    const file = storageNotice.pendingFile;
+    setIsUploadingProfile(true);
+    setProfileUploadProgress(30);
+
+    try {
+      const result = await uploadImageToServerStorage(file, (p) => setProfileUploadProgress(p));
+      const updatedHeader = {
+        ...draftBiodata.header,
+        photoUrl: result.url,
+      };
+      const updatedBiodata: BiodataContent = {
+        ...draftBiodata,
+        header: updatedHeader,
+      };
+      setDraftBiodata(updatedBiodata);
+      setProfilePhotoUrlInput(result.url);
+      setProfileUploadSuccess(`Saved permanently to Cloud Storage (${result.filename})`);
+      setStorageNotice(null);
+      onUpdateBiodata(updatedBiodata);
+      onPublish(updatedBiodata);
+      showToast('Photo saved to cloud storage!');
+    } catch (err: any) {
+      showToast(err.message || 'Cloud storage upload failed');
+    } finally {
+      setIsUploadingProfile(false);
+      setProfileUploadProgress(0);
     }
   };
 
@@ -1179,6 +1234,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2 animate-fadeIn">
                   <CheckCircle2 size={16} className="shrink-0 text-emerald-400" />
                   <span>{profileUploadSuccess}</span>
+                </div>
+              )}
+
+              {storageNotice && (
+                <div className="p-4 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-200 text-xs space-y-3 animate-fadeIn">
+                  <div className="flex items-start gap-2.5">
+                    <AlertCircle size={18} className="text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold text-white text-sm">Firebase Storage Bucket Activation Required</p>
+                      <p className="text-white/70 mt-1 leading-relaxed">
+                        Google Cloud requires clicking <strong>"Get Started"</strong> once in your Firebase Console to activate your project's storage bucket (<code className="text-amber-300">sinuous-gist-471110-i3.firebasestorage.app</code>).
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                    {storageNotice.actionUrl && (
+                      <a
+                        href={storageNotice.actionUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-semibold text-xs inline-flex items-center gap-1.5 transition no-underline shadow cursor-pointer"
+                      >
+                        <span>Open Firebase Storage Console</span>
+                        <ExternalLink size={13} />
+                      </a>
+                    )}
+                    {storageNotice.pendingFile && (
+                      <button
+                        type="button"
+                        onClick={handleFallbackServerUpload}
+                        className="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-medium border border-white/10 transition cursor-pointer"
+                      >
+                        Save to Cloud Storage Meanwhile
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
